@@ -17,41 +17,48 @@ For example usage, you may refer to the [demo](./src/demo/index.html) contained 
 
 For a temporal HFTNN forward transform, the following steps are done:
 1. Given a discrete signal $x[n]$, the signal is split into non-overlapping windowed chunks of length $N$. Each chunk is denoted as $x_{chunk}[k]$, where $k$ is the index of the chunk.
-	$$
-	\begin{align*}
-	\\x_{chunk}[k] = x[n], \quad \text{for } n = kN \text{ to } (k+1)N - 1
-	\end{align*}
-	$$
+
+$$
+\begin{align*}
+x_{chunk}[k] = x[n], \quad \text{for } n = kN \text{ to } (k+1)N - 1
+\end{align*}
+$$
 	
 2. The Fourier transform of each chunk $x_{chunk}[k]$ is denoted as $X_{\text{chunk}}[k]$.
-	$$
-	\begin{align*}
-	\\X_{\text{chunk}}[k] = \mathcal{F}(x_{\text{chunk}}[k])
-	\end{align*}
-	$$
+
+$$
+\begin{align*}
+X_{\text{chunk}}[k] = \mathcal{F}(x_{\text{chunk}}[k])
+\end{align*}
+$$
   
-3. For each Fourier transform bin, harmonics are selected within a specified range of octaves, including neighboring bins. Let $HFT$ be the resulting array.
-	$$
-	\begin{align*}
-	\\HFT[j] = [\text{magnitude, phase}]
-	\end{align*}
-	$$
+4. For each Fourier transform bin, harmonics are selected within a specified range of octaves, including neighboring bins. Let $HFT$ be the resulting array.
+
+$$
+\begin{align*}
+HFT[j] = [\text{magnitude, phase}]
+\end{align*}
+$$
+
 Here, $j$ represents the index iterating over the selected harmonics and neighboring bins.
 
-4. The frequency corresponding to each harmonic is calculated using a function $\text{freq}(j)$. The corresponding FFT bin index is denoted as $\text{binIdx}(j)$.
-	$$
-	\begin{align*}
-	\\\text{freq}(j) = \text{intervalToFreq}(j, \text{fundamental}, \text{frequenciesInOctave})
-	\\\text{binIdx}(j) = \text{freqToFftBin}(\text{freq}(j), sampleRate, \text{signalLength})
-	\end{align*}
-	$$
+5. The frequency corresponding to each harmonic is calculated using a function $\text{freq}(j)$. The corresponding FFT bin index is denoted as $\text{binIdx}(j)$.
+
+$$
+\begin{align*}
+\text{freq}(j) = \text{intervalToFreq}(j, \text{fundamental}, \text{frequenciesInOctave})
+\newline
+\text{binIdx}(j) = \text{freqToFftBin}(\text{freq}(j), sampleRate, \text{signalLength})
+\end{align*}
+$$
   
-5.  To handle edge cases where the computed bin index $binIdx$ and neighboring indices $idx$ may go beyond the bounds of the array, a conditional statement is used.
-	$$
-	\begin{align*}
-	\\HFT[j] = \begin{cases} [0, 0], & \text{if } \text{idx} < 0 \text{ or } \text{idx} \geq \text{bins.length} \\ [\text{magnitude, phase}], & \text{otherwise} \end{cases}
-	\end{align*}
-	$$
+7.  To handle edge cases where the computed bin index $binIdx$ and neighboring indices $idx$ may go beyond the bounds of the array, a conditional statement is used.
+
+$$
+\begin{align*}
+HFT[j] = \begin{cases} [0, 0], & \text{if } \text{idx} < 0 \text{ or } \text{idx} \geq \text{bins.length} \newline [\text{magnitude, phase}], & \text{otherwise} \end{cases}
+\end{align*}
+$$
 
 In summary, the abstraction involves the concept of signal chunking, Fourier transformation, harmonic selection, frequency calculation, and handling edge cases for each selected harmonic. The resulting \(HFT\) array captures the magnitude and phase information for the selected harmonics and neighboring bins across all chunks.
 
