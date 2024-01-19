@@ -1,22 +1,15 @@
 
 # Harmonic Fourier Transform for Neural Networks (HFTNN)
 
-This repository contains an example of computing a HFTNN - a filtered version of a Fourier transform, suitable for training neural networks on content that is harmonic in nature.
+This repository contains an example of computing a HFTNN - a modified version of a discrete Fourier transform, suitable for training neural networks on content that is harmonic in nature.
 
-  
-
-The resulting transforms may greatly reduce the required size of the input layer of a NN. For data such as e.g. piano performances or synthesizer pads, a HFTNN removes redundant information, as well as removing any inharmonic noise that might have been present in the dataset.
-
-  
+The resulting transforms may greatly reduce the required size of the input layer of a NN. For data such as e.g. piano performances or synthesizer pads, a HFTNN of a given discrete signal removes redundant information, which includes any inharmonic noise that may be present in the dataset.
 
 For example usage, you may refer to the [demo](./src/demo/index.html) contained in the repository.
 
-  
-
 ## Theory of operation
-
 For a temporal HFTNN forward transform, the following steps are done:
-1. Given a discrete signal $x[n]$, the signal is split into non-overlapping windowed chunks of length $N$. Each chunk is denoted as $x_{chunk}[k]$, where $k$ is the index of the chunk.
+1. Given a discrete signal $x[n]$, the signal is split into non-overlapping, windowed chunks of length $N$. Each chunk is denoted as $x_{chunk}[k]$, where $k$ is the index of the chunk.
 
 $$
 \begin{align*}
@@ -60,7 +53,7 @@ HFT[j] = \begin{cases} [0, 0], & \text{if } \text{idx} < 0 \text{ or } \text{idx
 \end{align*}
 $$
 
-In summary, the abstraction involves the concept of signal chunking, Fourier transformation, harmonic selection, frequency calculation, and handling edge cases for each selected harmonic. The resulting \(HFT\) array captures the magnitude and phase information for the selected harmonics and neighboring bins across all chunks.
+In summary, the abstraction involves the concept of signal chunking, Fourier transformation, harmonic selection, frequency calculation, and handling edge cases for each selected harmonic. The resulting $HFT$ array captures the magnitude and phase information for the selected harmonics and neighboring bins across all chunks.
 
 A similar algorithm is used for the inverse temporal transform.
 
