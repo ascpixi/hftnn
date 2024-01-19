@@ -52,7 +52,7 @@ $$
 \end{align*}
 $$
   
-7.  To handle edge cases where the computed bin index $binIdx$ and neighboring indices $idx$ may go beyond the bounds of the array, a conditional statement is used.
+6.  To handle edge cases where the computed bin index $binIdx$ and neighboring indices $idx$ may go beyond the bounds of the array, a conditional statement is used.
 
 $$
 \begin{align*}
