@@ -110,13 +110,13 @@ export function HftnnDemo() {
     const url = URL.createObjectURL(blob);
 
     setHfttnArr([
-      ...hftnnArr,
       {
         signalLength: signal.length,
         singleSize: hftTransform[0].length,
         totalSize: hftTransform.length * hftTransform[0].length * 2,
         dataUrl: url
-      }
+      },
+      ...hftnnArr
     ]);
   }
 
