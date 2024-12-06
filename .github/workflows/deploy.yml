@@ -56,7 +56,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('demo/**/package-lock.json', 'demo/**/yarn.lock') }}-
 
-      - name: Install dependencies
+      - name: Install HFTNN dependencies
+        working-directory: ./
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+      - name: Install demo dependencies
         working-directory: ./demo
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
