@@ -7,7 +7,7 @@ import { HftnnDemo } from "./HftnnDemo";
 
 export default function Home() {
   return (
-    <div className="h-full px-48 py-32 font-[family-name:var(--font-sans)]">
+    <div className="px-48 py-32 font-[family-name:var(--font-sans)]">
       <header className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <p className="font-semibold text-indigo-400">Harmonic Fourier Transform for Neural Networks</p>

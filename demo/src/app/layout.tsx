@@ -21,9 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full dark">
+    <html lang="en" className="dark">
       <body
-        className={`${font.variable} antialiased h-full`}
+        className={`${font.variable} antialiased`}
       >
         <Providers>
           {children}
