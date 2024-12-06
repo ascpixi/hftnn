@@ -1,4 +1,4 @@
-import React, { SetStateAction } from "react";
+import React from "react";
 
 export function bindIntValue(current: number, setter: (x: number) => void) {
     return {
