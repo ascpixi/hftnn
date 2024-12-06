@@ -88,11 +88,13 @@ export function hftnnForward(
     const bins = new Array<{ magnitude: number, phase: number } | undefined>(transform.length / 2);
     const hft: [number, number][] = [];
 
-    function computeBinIfNecessary(idx: number) {
+    function getOrComputeBin(idx: number) {
         if (bins[idx] == undefined) {
             let fftIdx = idx * 2;
             bins[idx] = fftBinToMagnitudePhase(transform[fftIdx], transform[fftIdx + 1]);
         }
+
+        return bins[idx];
     }
 
     let j = 0;
@@ -108,14 +110,12 @@ export function hftnnForward(
                 if(idx < 0) {
                     hft.push([0, 0]);
                 } else {
-                    computeBinIfNecessary(idx);
-                    let bin = bins[idx];
+                    let bin = getOrComputeBin(idx);
                     hft.push([bin.magnitude, bin.phase]);
                 }
             }
 
-            computeBinIfNecessary(binIdx);
-            const bin = bins[binIdx];
+            const bin = getOrComputeBin(binIdx);
             hft.push([bin.magnitude, bin.phase]);
 
             for (let extraBinIdx = 1; extraBinIdx <= properties.extraBins; extraBinIdx++) {
@@ -124,8 +124,7 @@ export function hftnnForward(
                 if(idx >= bins.length) {
                     hft.push([0, 0]);
                 } else {
-                    computeBinIfNecessary(idx);
-                    let bin = bins[idx];
+                    let bin = getOrComputeBin(idx);
                     hft.push([bin.magnitude, bin.phase]);
                 }
             }
@@ -255,7 +254,7 @@ export function hftnnInverseTemporal(hftt: [number, number][][], properties: HFT
                 // add missing interpolated chunks
                 let t = (j + 1) / ((properties.interpolatedChunks * 2) + 1);
 
-                const interpolated = [];
+                const interpolated: [number, number][] = [];
                 for (let k = 0; k < hft.length; k++) {
                     interpolated.push(
                         [
